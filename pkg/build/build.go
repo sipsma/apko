@@ -32,7 +32,7 @@ type Context struct {
 	UseProot           bool
 	Tags               []string
 	SourceDateEpoch    time.Time
-	WantSBOM           bool
+	SBOMPath           string
 }
 
 func (bc *Context) Summarize() {
@@ -41,7 +41,7 @@ func (bc *Context) Summarize() {
 	log.Printf("  tarball path: %s", bc.TarballPath)
 	log.Printf("  use proot: %t", bc.UseProot)
 	log.Printf("  source date: %s", bc.SourceDateEpoch)
-	log.Printf("  generate SBOM: %t", bc.WantSBOM)
+	log.Printf("  SBOM output path: %s", bc.SBOMPath)
 	bc.ImageConfiguration.Summarize()
 }
 
@@ -158,9 +158,9 @@ func WithBuildDate(s string) Option {
 	}
 }
 
-func WithSBOM(enable bool) Option {
+func WithSBOM(path string) Option {
 	return func(bc *Context) error {
-		bc.WantSBOM = enable
+		bc.SBOMPath = path
 		return nil
 	}
 }
