@@ -28,6 +28,7 @@ import (
 func Build() *cobra.Command {
 	var useProot bool
 	var buildDate string
+	var sbomPath string
 
 	cmd := &cobra.Command{
 		Use:   "build",
@@ -45,12 +46,14 @@ command, e.g.
 				build.WithConfig(args[0]),
 				build.WithProot(useProot),
 				build.WithBuildDate(buildDate),
+				build.WithSBOM(sbomPath),
 			)
 		},
 	}
 
 	cmd.Flags().BoolVar(&useProot, "use-proot", false, "use proot to simulate privileged operations")
 	cmd.Flags().StringVar(&buildDate, "build-date", "", "date used for the timestamps of the files inside the image")
+	cmd.Flags().StringVar(&sbomPath, "sbom-path", "", "generate an SBOM")
 
 	return cmd
 }
